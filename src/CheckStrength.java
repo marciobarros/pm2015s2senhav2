@@ -83,7 +83,7 @@ public class CheckStrength
 	/**
 	 * Verifica a força de uma senha
 	 */
-	public static int checkPasswordStrength(String passwd) 
+	public int checkPasswordStrength(String passwd) 
 	{
 		if (StringUtils.equalsNull(passwd)) 
 		{
@@ -295,7 +295,7 @@ public class CheckStrength
 	/**
 	 * Retorna o nível de segurança de uma senha
 	 */
-	public static LEVEL getPasswordLevel(String passwd) 
+	public LEVEL getPasswordLevel(String passwd) 
 	{
 		int level = checkPasswordStrength(passwd);
 		
