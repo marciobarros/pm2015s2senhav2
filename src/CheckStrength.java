@@ -302,31 +302,18 @@ public class CheckStrength
 	{
 		int level = checkPasswordStrength(passwd);
 		
-		switch (level) 
-		{
-			case 0:
-			case 1:
-			case 2:
-			case 3:
-				return LEVEL.EASY;
+		if (level <= 3)
+			return LEVEL.EASY;
 
-			case 4:
-			case 5:
-			case 6:
-				return LEVEL.MEDIUM;
+		if (level <= 6)
+			return LEVEL.MEDIUM;
 			
-			case 7:
-			case 8:
-			case 9:
-				return LEVEL.STRONG;
+		if (level <= 9)
+			return LEVEL.STRONG;
 			
-			case 10:
-			case 11:
-			case 12:
-				return LEVEL.VERY_STRONG;
+		if (level <= 12)
+			return LEVEL.VERY_STRONG;
 			
-			default:
-				return LEVEL.EXTREMELY_STRONG;
-		}
+		return LEVEL.EXTREMELY_STRONG;
 	}
 }
