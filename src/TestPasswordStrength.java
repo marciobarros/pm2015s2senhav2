@@ -40,5 +40,15 @@ public class TestPasswordStrength
 		assertEquals(11, checker.checkPasswordStrength("Bsi@CCet@Un1r10"));
 		assertEquals(13, checker.checkPasswordStrength("Bsi@C#Cet@Un1r10"));
 		assertEquals(14, checker.checkPasswordStrength("Bsi@C#Cet@Un1r10:-)"));
+		
+		// ç é letra minúscula, Ç é letra maiúscula
+		assertEquals(0, checker.checkPasswordStrength("abç1"));
+		assertEquals(1, checker.checkPasswordStrength("abÇ1"));
+		assertEquals(2, checker.checkPasswordStrength("ab;1"));
+		
+		// mesma coisa para os caracteres acentuados
+		assertEquals(0, checker.checkPasswordStrength("abá1"));
+		assertEquals(1, checker.checkPasswordStrength("abÁ1"));
+		assertEquals(2, checker.checkPasswordStrength("ab;1"));
 	}
 }

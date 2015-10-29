@@ -10,14 +10,6 @@ public class CheckStrength
 	{
 		EASY, MEDIUM, STRONG, VERY_STRONG, EXTREMELY_STRONG
 	}
-
-	/**
-	 * Tipos de caracateres
-	 */
-	enum CharType
-	{
-		NUM, SMALL_LETTER, CAPITAL_LETTER, OTHER_CHAR
-	}
 	
 	/**
 	 * Dicionário de senhas simples
@@ -40,42 +32,43 @@ public class CheckStrength
 	};
 
 	/**
-	 * Verifica o tipo de um caractere
+	 * Conta o número de caracteres numéricos
 	 */
-	private static CharType checkCharacterType(char c) 
-	{
-		if (c >= 48 && c <= 57) 
-		{
-			return CharType.NUM;
-		}
-		
-		if (c >= 65 && c <= 90) 
-		{
-			return CharType.CAPITAL_LETTER;
-		}
-		
-		if (c >= 97 && c <= 122) 
-		{
-			return CharType.SMALL_LETTER;
-		}
-		
-		return CharType.OTHER_CHAR;
-	}
-
-	/**
-	 * Conta o número de caracteres de um determinado tipo em uma senha
-	 */
-	private static int countLetter(String passwd, CharType type) 
+	private int countNumeric(String password) 
 	{
 		int count = 0;
 		
-		for (char c : passwd.toCharArray()) 
-		{
-			if (checkCharacterType(c) == type) 
-			{
+		for (char c : password.toCharArray()) 
+			if (Character.isDigit(c))
 				count++;
-			}
-		}
+		
+		return count;
+	}
+
+	/**
+	 * Conta o número de letras minúsculas
+	 */
+	private int countSmallLetter(String password) 
+	{
+		int count = 0;
+		
+		for (char c : password.toCharArray())
+			if (Character.isLowerCase(c))
+				count++;
+		
+		return count;
+	}
+
+	/**
+	 * Conta o número de letras maiúsculas
+	 */
+	private int countCapitalLetter(String password) 
+	{
+		int count = 0;
+		
+		for (char c : password.toCharArray())
+			if (Character.isUpperCase(c))
+				count++;
 		
 		return count;
 	}
@@ -83,19 +76,19 @@ public class CheckStrength
 	/**
 	 * Verifica a força de uma senha
 	 */
-	public int checkPasswordStrength(String passwd) 
+	public int checkPasswordStrength(String password) 
 	{
-		if (StringUtils.equalsNull(passwd)) 
+		if (StringUtils.equalsNull(password)) 
 		{
 			throw new IllegalArgumentException("password is empty");
 		}
 		
-		int len = passwd.length();
+		int len = password.length();
 		int level = 0;
 		
-		int countNumeric = countLetter(passwd, CharType.NUM);
-		int countSmall = countLetter(passwd, CharType.SMALL_LETTER); 
-		int countCapital = countLetter(passwd, CharType.CAPITAL_LETTER); 
+		int countNumeric = countNumeric(password);
+		int countSmall = countSmallLetter(password); 
+		int countCapital = countCapitalLetter(password); 
 		int countSpecial = len - countNumeric - countSmall - countCapital;
 
 		// adiciona pontos
@@ -186,17 +179,17 @@ public class CheckStrength
 		}
 
 		// desconta pontos
-		if ("abcdefghijklmnopqrstuvwxyz".indexOf(passwd) > 0 || "ABCDEFGHIJKLMNOPQRSTUVWXYZ".indexOf(passwd) > 0) 
+		if ("abcdefghijklmnopqrstuvwxyz".indexOf(password) > 0 || "ABCDEFGHIJKLMNOPQRSTUVWXYZ".indexOf(password) > 0) 
 		{
 			level--;
 		}
 		
-		if ("qwertyuiop".indexOf(passwd) > 0 || "asdfghjkl".indexOf(passwd) > 0 || "zxcvbnm".indexOf(passwd) > 0) 
+		if ("qwertyuiop".indexOf(password) > 0 || "asdfghjkl".indexOf(password) > 0 || "zxcvbnm".indexOf(password) > 0) 
 		{
 			level--;
 		}
 		
-		if (StringUtils.isNumeric(passwd) && ("01234567890".indexOf(passwd) > 0 || "09876543210".indexOf(passwd) > 0)) 
+		if (StringUtils.isNumeric(password) && ("01234567890".indexOf(password) > 0 || "09876543210".indexOf(password) > 0)) 
 		{
 			level--;
 		}
@@ -209,8 +202,8 @@ public class CheckStrength
 		// aaabbb
 		if (len % 2 == 0) 
 		{ 
-			String part1 = passwd.substring(0, len / 2);
-			String part2 = passwd.substring(len / 2);
+			String part1 = password.substring(0, len / 2);
+			String part2 = password.substring(len / 2);
 			
 			if (part1.equals(part2)) 
 			{
@@ -226,9 +219,9 @@ public class CheckStrength
 		// ababab
 		if (len % 3 == 0) 
 		{ 
-			String part1 = passwd.substring(0, len / 3);
-			String part2 = passwd.substring(len / 3, len / 3 * 2);
-			String part3 = passwd.substring(len / 3 * 2);
+			String part1 = password.substring(0, len / 3);
+			String part2 = password.substring(len / 3, len / 3 * 2);
+			String part3 = password.substring(len / 3 * 2);
 
 			if (part1.equals(part2) && part2.equals(part3)) 
 			{
@@ -237,18 +230,18 @@ public class CheckStrength
 		}
 
 		// 19881010 ou 881010
-		if (StringUtils.isNumeric(passwd) && len >= 6) 
+		if (StringUtils.isNumeric(password) && len >= 6) 
 		{ 
 			int year = 0;
 			
 			if (len == 8 || len == 6) 
 			{
-				year = Integer.parseInt(passwd.substring(0, len - 4));
+				year = Integer.parseInt(password.substring(0, len - 4));
 			}
 			
 			int size = StringUtils.sizeOfInt(year);
-			int month = Integer.parseInt(passwd.substring(size, size + 2));
-			int day = Integer.parseInt(passwd.substring(size + 2, len));
+			int month = Integer.parseInt(password.substring(size, size + 2));
+			int day = Integer.parseInt(password.substring(size + 2, len));
 			
 			if (year >= 1950 && year < 2050 && month >= 1 && month <= 12 && day >= 1 && day <= 31) 
 			{
@@ -261,7 +254,7 @@ public class CheckStrength
 		{
 			for (int i = 0; i < DICTIONARY.length; i++) 
 			{
-				if (passwd.equals(DICTIONARY[i]) || DICTIONARY[i].indexOf(passwd) >= 0) 
+				if (password.equals(DICTIONARY[i]) || DICTIONARY[i].indexOf(password) >= 0) 
 				{
 					level--;
 					break;
@@ -284,7 +277,7 @@ public class CheckStrength
 			}
 		}
 
-		if (StringUtils.isCharEqual(passwd)) 
+		if (StringUtils.isCharEqual(password)) 
 		{
 			level = 0;
 		}
