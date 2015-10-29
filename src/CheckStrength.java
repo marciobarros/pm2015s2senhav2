@@ -95,80 +95,85 @@ public class CheckStrength
 		
 		int len = passwd.length();
 		int level = 0;
+		
+		int countNumeric = countLetter(passwd, CharType.NUM);
+		int countSmall = countLetter(passwd, CharType.SMALL_LETTER); 
+		int countCapital = countLetter(passwd, CharType.CAPITAL_LETTER); 
+		int countSpecial = countLetter(passwd, CharType.OTHER_CHAR);
 
 		// adiciona pontos
-		if (countLetter(passwd, CharType.NUM) > 0) 
+		if (countNumeric > 0) 
 		{
 			level++;
 		}
 		
-		if (countLetter(passwd, CharType.SMALL_LETTER) > 0) 
+		if (countSmall > 0) 
 		{
 			level++;
 		}
 		
-		if (len > 4 && countLetter(passwd, CharType.CAPITAL_LETTER) > 0) 
+		if (len > 4 && countCapital > 0) 
 		{
 			level++;
 		}
 		
-		if (len > 6 && countLetter(passwd, CharType.OTHER_CHAR) > 0) 
+		if (len > 6 && countSpecial > 0) 
 		{
 			level++;
 		}
 
-		if (len > 4 && countLetter(passwd, CharType.NUM) > 0 && countLetter(passwd, CharType.SMALL_LETTER) > 0
-				|| countLetter(passwd, CharType.NUM) > 0 && countLetter(passwd, CharType.CAPITAL_LETTER) > 0
-				|| countLetter(passwd, CharType.NUM) > 0 && countLetter(passwd, CharType.OTHER_CHAR) > 0
-				|| countLetter(passwd, CharType.SMALL_LETTER) > 0 && countLetter(passwd, CharType.CAPITAL_LETTER) > 0
-				|| countLetter(passwd, CharType.SMALL_LETTER) > 0 && countLetter(passwd, CharType.OTHER_CHAR) > 0
-				|| countLetter(passwd, CharType.CAPITAL_LETTER) > 0 && countLetter(passwd, CharType.OTHER_CHAR) > 0) 
+		if (len > 4 && countNumeric > 0 && countSmall > 0
+				|| countNumeric > 0 && countCapital > 0
+				|| countNumeric > 0 && countSpecial > 0
+				|| countSmall > 0 && countCapital > 0
+				|| countSmall > 0 && countSpecial > 0
+				|| countCapital > 0 && countSpecial > 0) 
 		{
 			level++;
 		}
 
-		if (len > 6 && countLetter(passwd, CharType.NUM) > 0 && countLetter(passwd, CharType.SMALL_LETTER) > 0 && countLetter(passwd, CharType.CAPITAL_LETTER) > 0 
-				|| countLetter(passwd, CharType.NUM) > 0 && countLetter(passwd, CharType.SMALL_LETTER) > 0 && countLetter(passwd, CharType.OTHER_CHAR) > 0
-				|| countLetter(passwd, CharType.NUM) > 0 && countLetter(passwd, CharType.CAPITAL_LETTER) > 0 && countLetter(passwd, CharType.OTHER_CHAR) > 0 
-				|| countLetter(passwd, CharType.SMALL_LETTER) > 0 && countLetter(passwd, CharType.CAPITAL_LETTER) > 0 && countLetter(passwd, CharType.OTHER_CHAR) > 0) 
+		if (len > 6 && countNumeric > 0 && countSmall > 0 && countCapital > 0 
+				|| countNumeric > 0 && countSmall > 0 && countSpecial > 0
+				|| countNumeric > 0 && countCapital > 0 && countSpecial > 0 
+				|| countSmall > 0 && countCapital > 0 && countSpecial > 0) 
 		{
 			level++;
 		}
 
-		if (len > 8 && countLetter(passwd, CharType.NUM) > 0 && countLetter(passwd, CharType.SMALL_LETTER) > 0 && countLetter(passwd, CharType.CAPITAL_LETTER) > 0 && countLetter(passwd, CharType.OTHER_CHAR) > 0) 
+		if (len > 8 && countNumeric > 0 && countSmall > 0 && countCapital > 0 && countSpecial > 0) 
 		{
 			level++;
 		}
 
-		if (len > 6 && countLetter(passwd, CharType.NUM) >= 3 && countLetter(passwd, CharType.SMALL_LETTER) >= 3
-				|| countLetter(passwd, CharType.NUM) >= 3 && countLetter(passwd, CharType.CAPITAL_LETTER) >= 3
-				|| countLetter(passwd, CharType.NUM) >= 3 && countLetter(passwd, CharType.OTHER_CHAR) >= 2
-				|| countLetter(passwd, CharType.SMALL_LETTER) >= 3 && countLetter(passwd, CharType.CAPITAL_LETTER) >= 3
-				|| countLetter(passwd, CharType.SMALL_LETTER) >= 3 && countLetter(passwd, CharType.OTHER_CHAR) >= 2
-				|| countLetter(passwd, CharType.CAPITAL_LETTER) >= 3 && countLetter(passwd, CharType.OTHER_CHAR) >= 2) 
+		if (len > 6 && countNumeric >= 3 && countSmall >= 3
+				|| countNumeric >= 3 && countCapital >= 3
+				|| countNumeric >= 3 && countSpecial >= 2
+				|| countSmall >= 3 && countCapital >= 3
+				|| countSmall >= 3 && countSpecial >= 2
+				|| countCapital >= 3 && countSpecial >= 2) 
 		{
 			level++;
 		}
 
-		if (len > 8 && countLetter(passwd, CharType.NUM) >= 2 && countLetter(passwd, CharType.SMALL_LETTER) >= 2 && countLetter(passwd, CharType.CAPITAL_LETTER) >= 2 
-				|| countLetter(passwd, CharType.NUM) >= 2 && countLetter(passwd, CharType.SMALL_LETTER) >= 2 && countLetter(passwd, CharType.OTHER_CHAR) >= 2
-				|| countLetter(passwd, CharType.NUM) >= 2 && countLetter(passwd, CharType.CAPITAL_LETTER) >= 2 && countLetter(passwd, CharType.OTHER_CHAR) >= 2 
-				|| countLetter(passwd, CharType.SMALL_LETTER) >= 2 && countLetter(passwd, CharType.CAPITAL_LETTER) >= 2 && countLetter(passwd, CharType.OTHER_CHAR) >= 2) 
+		if (len > 8 && countNumeric >= 2 && countSmall >= 2 && countCapital >= 2 
+				|| countNumeric >= 2 && countSmall >= 2 && countSpecial >= 2
+				|| countNumeric >= 2 && countCapital >= 2 && countSpecial >= 2 
+				|| countSmall >= 2 && countCapital >= 2 && countSpecial >= 2) 
 		{
 			level++;
 		}
 
-		if (len > 10 && countLetter(passwd, CharType.NUM) >= 2 && countLetter(passwd, CharType.SMALL_LETTER) >= 2 && countLetter(passwd, CharType.CAPITAL_LETTER) >= 2 && countLetter(passwd, CharType.OTHER_CHAR) >= 2) 
+		if (len > 10 && countNumeric >= 2 && countSmall >= 2 && countCapital >= 2 && countSpecial >= 2) 
 		{
 			level++;
 		}
 
-		if (countLetter(passwd, CharType.OTHER_CHAR) >= 3) 
+		if (countSpecial >= 3) 
 		{
 			level++;
 		}
 		
-		if (countLetter(passwd, CharType.OTHER_CHAR) >= 6) 
+		if (countSpecial >= 6) 
 		{
 			level++;
 		}
@@ -199,7 +204,7 @@ public class CheckStrength
 			level--;
 		}
 
-		if (countLetter(passwd, CharType.NUM) == len || countLetter(passwd, CharType.SMALL_LETTER) == len || countLetter(passwd, CharType.CAPITAL_LETTER) == len) 
+		if (countNumeric == len || countSmall == len || countCapital == len) 
 		{
 			level--;
 		}
