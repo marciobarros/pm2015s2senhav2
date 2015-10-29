@@ -69,14 +69,11 @@ public class CheckStrength
 	{
 		int count = 0;
 		
-		if (null != passwd && passwd.length() > 0) 
+		for (char c : passwd.toCharArray()) 
 		{
-			for (char c : passwd.toCharArray()) 
+			if (checkCharacterType(c) == type) 
 			{
-				if (checkCharacterType(c) == type) 
-				{
-					count++;
-				}
+				count++;
 			}
 		}
 		
