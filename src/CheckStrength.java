@@ -78,62 +78,42 @@ public class CheckStrength
 	 */
 	public int checkPasswordStrength(String password) 
 	{
+		// Tratamento de senhas nulas
 		if (StringUtils.equalsNull(password)) 
-		{
 			throw new IllegalArgumentException("password is empty");
-		}
-		
+
+		// Conta o número de cada componente da senha
 		int len = password.length();
-		int level = 0;
-		
 		int countNumeric = countNumeric(password);
 		int countSmall = countSmallLetter(password); 
 		int countCapital = countCapitalLetter(password); 
 		int countSpecial = len - countNumeric - countSmall - countCapital;
 
+		int level = 0;
+
 		// adiciona pontos
 		if (countNumeric > 0) 
-		{
 			level++;
-		}
 		
 		if (countSmall > 0) 
-		{
 			level++;
-		}
 		
 		if (len > 4 && countCapital > 0) 
-		{
 			level++;
-		}
 		
 		if (len > 6 && countSpecial > 0) 
-		{
 			level++;
-		}
 
-		if (len > 4 && countNumeric > 0 && countSmall > 0
-				|| countNumeric > 0 && countCapital > 0
-				|| countNumeric > 0 && countSpecial > 0
-				|| countSmall > 0 && countCapital > 0
-				|| countSmall > 0 && countSpecial > 0
-				|| countCapital > 0 && countSpecial > 0) 
-		{
+		int components = countComponents(countNumeric, countSmall, countCapital, countSpecial);
+		
+		if (len > 4 && components >= 2)
 			level++;
-		}
 
-		if (len > 6 && countNumeric > 0 && countSmall > 0 && countCapital > 0 
-				|| countNumeric > 0 && countSmall > 0 && countSpecial > 0
-				|| countNumeric > 0 && countCapital > 0 && countSpecial > 0 
-				|| countSmall > 0 && countCapital > 0 && countSpecial > 0) 
-		{
+		if (len > 6 && components >= 3)
 			level++;
-		}
 
-		if (len > 8 && countNumeric > 0 && countSmall > 0 && countCapital > 0 && countSpecial > 0) 
-		{
+		if (len > 8 && components >= 4) 
 			level++;
-		}
 
 		if (len > 6 && countNumeric >= 3 && countSmall >= 3
 				|| countNumeric >= 3 && countCapital >= 3
@@ -289,6 +269,29 @@ public class CheckStrength
 
 		return level;
 	}
+
+	/**
+	 * Conta o número de componentes distintos na senha
+	 */
+	private int countComponents(int countNumeric, int countSmall, int countCapital, int countSpecial) 
+	{
+		int componentCount = 0;
+		
+		if (countNumeric > 0)
+			componentCount++;
+		
+		if (countSmall > 0)
+			componentCount++;
+		
+		if (countCapital > 0)
+			componentCount++;
+		
+		if (countSpecial > 0)
+			componentCount++;
+		
+		return componentCount;
+	}
+	
 
 	/**
 	 * Retorna o nível de segurança de uma senha
