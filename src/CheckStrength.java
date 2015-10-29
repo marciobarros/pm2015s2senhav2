@@ -99,7 +99,7 @@ public class CheckStrength
 		int countNumeric = countLetter(passwd, CharType.NUM);
 		int countSmall = countLetter(passwd, CharType.SMALL_LETTER); 
 		int countCapital = countLetter(passwd, CharType.CAPITAL_LETTER); 
-		int countSpecial = countLetter(passwd, CharType.OTHER_CHAR);
+		int countSpecial = len - countNumeric - countSmall - countCapital;
 
 		// adiciona pontos
 		if (countNumeric > 0) 
