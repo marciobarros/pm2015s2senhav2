@@ -1,0 +1,82 @@
+I. Descrição geral da classe
+
+Dada uma senha X, calcula uma pontuação proporcional à força desta senha. Se a senha for nula, deve ser gerada uma exceção. Se a senha tiver menos do que três caracteres
+ou for representada por uma sequência cotnendo diversas repetições de um mesmo caractere, sua pontuação será zero. Caso contrário, a pontuação será calculada avaliando-se
+se a senha atende a uma lista de critérios que adicionam ou removem pontos da sua pontuação. Nenhuma senha deve ter pontuação menor que zero.
+
+Os critérios estão listados abaixo e para avaliá-los devemos definir caractere numérico como qualquer caractere que apareça entre os caracteres '0' e '9' na tabela ASCII, 
+letra minúscula como qualquer caractere que apareça entre os caracteres 'a' e 'z' na tabela ASCII, letra maiúscula como qualquer caractere que apareça entre os caracteres
+'A' e 'Z' na tabela ASCII e caractere especial como qualquer caractere que não seja numérico, letra minúscula ou letra maiúscula.
+
+
+II. Critérios que acrescentam um ponto na pontuação de uma senha
+
+* se a senha tiver ao menos um caractere numérico
+
+* se a senha tiver ao menos uma letra minúscula
+
+* se a senha tiver ao menos uma letra maiúscula
+
+* se a senha tiver ao menos um caractere especial
+
+* Se a senha tiver ao menos quatro caracteres e ao menos duas opções entre um caractere numérico, uma letra minúscula, uma letra maiúscula e um caractere especial
+
+* Se a senha tiver ao menos seis caracteres e ao menos três opções entre um caractere numérico, uma letra minúscula, uma letra maiúscula e um caractere especial
+
+* Se a senha tiver ao menos oito caracteres, ao menos um caractere numérico, ao menos uma letra minúscula, ao menos uma letra maiúscula e ao menos um caractere especial
+
+* Se a senha tiver ao menos seis caracteres e ao menos duas opções entre três ou mais caracteres numéricos, três ou mais letras minúsculas, três ou mais letras maiúsculas e dois ou mais caracteres especiais
+
+* Se a senha tiver ao menos oito caracteres e ao menos três opções entre dois ou mais caracteres numéricos, duas ou mais letras minúsculas e duas ou mais letras maiúsculas e dois ou mais caracteres especiais
+
+* Se a senha tiver ao menos dez caracteres, ao menos dois caracteres numéricos, ao menos duas letras minúsculas, ao menos duas letras maiúsculas e ao menos dois caracteres especiais
+
+* Se a senha tiver ao menos três caracteres especiais
+
+* Se a senha tiver ao menos seis caracteres especiais
+
+* Se a senha tiver ao menos 12 caracteres
+
+* Se a senha tiver ao menos 16 caracteres
+
+
+III. Critérios que retiram um ponto da pontuação uma senha
+
+* se a senha tiver todas as letras do alfabeto maiúsculas em sequência
+
+* se a senha tiver todas as letras do alfabeto minúsculas em sequência
+
+* se a senha tiver as sequências "qwertyuiop", "asdfghjkl" ou "zxcvbnm" (linhas do teclado padrão americano)
+
+* se a senha só tiver caracteres numéricos e tiver as sequências "01234567890" ou 09876543210
+
+* se a senha só tiver caracteres numéricos ou só tiver letras minúsculas ou só tiver letras maiúsculas
+
+* se a senha tiver um número par de caracteres e sua primeira metade for igual à segunda
+
+* se a senha tiver um número par de caracteres e cada metade for formada por uma sequência de N ocorrências de um mesmo caractere
+
+* se a senha puder ser dividida em três partes iguais, apresentadas em sequência
+
+* se a senha for composta por seis dígitos numéricos, sendo que os primeiros quatro representam um ano (entre 1950 e 2049), os dois seguintes um mês (entre 1 e 12) e os dois seguintes um dia (entre 1 e 31)
+
+* se a senha estiver listada em um dicionário
+
+* se ao menos uma entrada de um dicionário contiver a senha
+
+* se a senha tiver seis caracteres ou menos
+
+* se a senha tiver quatro caracteres ou menos
+
+
+IV. Classificação final da senha de acordo com sua pontuação
+
+* Se a senha tiver pontuação menor ou igual a 3, ela deve ser considerada fácil
+
+* Se a senha tiver pontuação entre 4 e 6, ela deve ser considerada mediana
+
+* Se a senha tiver pontuação entre 7 e 9, ela deve ser considerada forte
+
+* Se a senha tiver pontuação entre 10 e 12, ela deve ser considerada muito forte
+
+* Se a senha tiver pontuação maior do que 12, ela deve ser considerada fortíssima
