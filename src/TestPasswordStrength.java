@@ -35,7 +35,8 @@ public class TestPasswordStrength
 		assertEquals(0, checker.checkPasswordStrength("Abc1"));
 		assertEquals(3, checker.checkPasswordStrength("Abc1@"));
 		assertEquals(7, checker.checkPasswordStrength("Abc1@#;"));
-		assertEquals(7, checker.checkPasswordStrength("ABbc1#;"));
+		assertEquals(6, checker.checkPasswordStrength("ABbc1#;"));
+		assertEquals(7, checker.checkPasswordStrength("ABbcd1#;"));
 		assertEquals(5, checker.checkPasswordStrength("Ab123456"));
 		assertEquals(11, checker.checkPasswordStrength("Bsi@CCet@Un1r10"));
 		assertEquals(13, checker.checkPasswordStrength("Bsi@C#Cet@Un1r10"));

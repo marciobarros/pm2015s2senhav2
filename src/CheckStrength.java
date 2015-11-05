@@ -112,31 +112,17 @@ public class CheckStrength
 		if (len > 6 && components >= 3)
 			level++;
 
-		if (len > 8 && components >= 4) 
+		if (len > 8 && components == 4) 
 			level++;
 
-		if (len > 6 && countNumeric >= 3 && countSmall >= 3
-				|| countNumeric >= 3 && countCapital >= 3
-				|| countNumeric >= 3 && countSpecial >= 2
-				|| countSmall >= 3 && countCapital >= 3
-				|| countSmall >= 3 && countSpecial >= 2
-				|| countCapital >= 3 && countSpecial >= 2) 
-		{
+		if (len > 6 && hasAtLeastTwoComplexComponents(countNumeric, countSmall, countCapital, countSpecial)) 
 			level++;
-		}
 
-		if (len > 8 && countNumeric >= 2 && countSmall >= 2 && countCapital >= 2 
-				|| countNumeric >= 2 && countSmall >= 2 && countSpecial >= 2
-				|| countNumeric >= 2 && countCapital >= 2 && countSpecial >= 2 
-				|| countSmall >= 2 && countCapital >= 2 && countSpecial >= 2) 
-		{
+		if (len > 8 && countComplexComponents(countNumeric, countSmall, countCapital, countSpecial) >= 3)
 			level++;
-		}
 
-		if (len > 10 && countNumeric >= 2 && countSmall >= 2 && countCapital >= 2 && countSpecial >= 2) 
-		{
+		if (len > 10 && countComplexComponents(countNumeric, countSmall, countCapital, countSpecial) == 4) 
 			level++;
-		}
 
 		if (countSpecial >= 3) 
 		{
@@ -291,7 +277,45 @@ public class CheckStrength
 		
 		return componentCount;
 	}
+
+	/**
+	 * Verifica se a senha tem pelo menos dois componentes complexos
+	 */
+	private boolean hasAtLeastTwoComplexComponents(int countNumeric, int countSmall, int countCapital, int countSpecial)
+	{
+		if (countNumeric >= 3 && (countSmall >= 3 || countCapital >= 3 || countSpecial >= 2))
+			return true;
+		
+		if (countSmall >= 3 && (countCapital >= 3 || countSpecial >= 2))
+			return true;
+		
+		if (countCapital >= 3 && countSpecial >= 2)
+			return true;
+		
+		return false;
+	}
 	
+	/**
+	 * Conta o número de componentes complexos de uma senha
+	 */
+	private int countComplexComponents(int countNumeric, int countSmall, int countCapital, int countSpecial)
+	{
+		int complexComponentCount = 0;
+		
+		if (countNumeric >= 2)
+			complexComponentCount++;
+		
+		if (countSmall >= 2)
+			complexComponentCount++;
+		
+		if (countCapital >= 2)
+			complexComponentCount++;
+		
+		if (countSpecial >= 2)
+			complexComponentCount++;
+		
+		return complexComponentCount;
+	}
 
 	/**
 	 * Retorna o nível de segurança de uma senha
