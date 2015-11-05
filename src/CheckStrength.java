@@ -148,72 +148,37 @@ public class CheckStrength
 
 		// desconta pontos
 		if ("abcdefghijklmnopqrstuvwxyz".indexOf(password) > 0 || "ABCDEFGHIJKLMNOPQRSTUVWXYZ".indexOf(password) > 0) 
-		{
 			level--;
-		}
 		
 		if ("qwertyuiop".indexOf(password) > 0 || "asdfghjkl".indexOf(password) > 0 || "zxcvbnm".indexOf(password) > 0) 
-		{
 			level--;
-		}
 		
 		if (StringUtils.isNumeric(password) && ("01234567890".indexOf(password) > 0 || "09876543210".indexOf(password) > 0)) 
-		{
 			level--;
-		}
 
 		if (countNumeric == len || countSmall == len || countCapital == len) 
-		{
 			level--;
-		}
 
-		// aaabbb
-		if (len % 2 == 0) 
-		{ 
-			String part1 = password.substring(0, len / 2);
-			String part2 = password.substring(len / 2);
-			
-			if (part1.equals(part2)) 
-			{
-				level--;
-			}
-			
-			if (StringUtils.isCharEqual(part1) && StringUtils.isCharEqual(part2)) 
-			{
-				level--;
-			}
-		}
+		if (checkTwoEqualParts(password))
+			level--;
 		
-		// ababab
-		if (len % 3 == 0) 
-		{ 
-			String part1 = password.substring(0, len / 3);
-			String part2 = password.substring(len / 3, len / 3 * 2);
-			String part3 = password.substring(len / 3 * 2);
+		if (checkTwoPartsSameCharacter(password))
+			level--;
 
-			if (part1.equals(part2) && part2.equals(part3)) 
-			{
-				level--;
-			}
-		}
+		if (checkThreeEqualParts(password))
+			level--;
 
-		// 19881010 ou 881010
 		if (checkPasswordIsDate(password))
 			level--;
 
-		// dicionario
 		if (checkPasswordInDictionary(password))
 			level--;
 
 		if (len <= 6) 
-		{
 			level--;
 
-			if (len <= 4) 
-			{
-				level--;
-			}
-		}
+		if (len <= 4) 
+			level--;
 
 		if (level < 0) 
 			level = 0;
@@ -280,6 +245,58 @@ public class CheckStrength
 			complexComponentCount++;
 		
 		return complexComponentCount;
+	}
+
+	/**
+	 * Verifica se a senha é formada de duas partes iguais
+	 */
+	private boolean checkTwoEqualParts(String password) 
+	{
+		int len = password.length();
+		
+		if (len % 2 == 0) 
+		{ 
+			String part1 = password.substring(0, len / 2);
+			String part2 = password.substring(len / 2);
+			return part1.equals(part2); 
+		}
+
+		return false;
+	}
+
+	/**
+	 * Verifica se a senha é formada de duas partes formadas pelo mesmo caractere
+	 */
+	private boolean checkTwoPartsSameCharacter(String password) 
+	{
+		int len = password.length();
+		
+		if (len % 2 == 0) 
+		{ 
+			String part1 = password.substring(0, len / 2);
+			String part2 = password.substring(len / 2);
+			return (StringUtils.isCharEqual(part1) && StringUtils.isCharEqual(part2)); 
+		}
+
+		return false;
+	}
+
+	/**
+	 * Verifica se a senha é formada por três partes iguais
+	 */
+	private boolean checkThreeEqualParts(String password) 
+	{
+		int len = password.length();
+		
+		if (len % 3 == 0) 
+		{ 
+			String part1 = password.substring(0, len / 3);
+			String part2 = password.substring(len / 3, len / 3 * 2);
+			String part3 = password.substring(len / 3 * 2);
+			return part1.equals(part2) && part2.equals(part3); 
+		}
+
+		return false;
 	}
 
 	/**
