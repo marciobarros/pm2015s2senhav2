@@ -125,24 +125,16 @@ public class CheckStrength
 			level++;
 
 		if (countSpecial >= 3) 
-		{
 			level++;
-		}
 		
 		if (countSpecial >= 6) 
-		{
 			level++;
-		}
 
 		if (len > 12) 
-		{
 			level++;
-			
-			if (len >= 16) 
-			{
-				level++;
-			}
-		}
+		
+		if (len >= 16) 
+			level++;
 
 		// desconta pontos
 		if ("abcdefghijklmnopqrstuvwxyz".indexOf(password) > 0 || "ABCDEFGHIJKLMNOPQRSTUVWXYZ".indexOf(password) > 0) 
@@ -196,24 +188,8 @@ public class CheckStrength
 		}
 
 		// 19881010 ou 881010
-		if (StringUtils.isNumeric(password) && len >= 6) 
-		{ 
-			int year = 0;
-			
-			if (len == 8 || len == 6) 
-			{
-				year = Integer.parseInt(password.substring(0, len - 4));
-			}
-			
-			int size = StringUtils.sizeOfInt(year);
-			int month = Integer.parseInt(password.substring(size, size + 2));
-			int day = Integer.parseInt(password.substring(size + 2, len));
-			
-			if (year >= 1950 && year < 2050 && month >= 1 && month <= 12 && day >= 1 && day <= 31) 
-			{
-				level--;
-			}
-		}
+		if (checkPasswordIsDate(password))
+			level--;
 
 		// dicionario
 		if (null != DICTIONARY && DICTIONARY.length > 0) 
@@ -315,6 +291,31 @@ public class CheckStrength
 			complexComponentCount++;
 		
 		return complexComponentCount;
+	}
+
+	/**
+	 * Verifica se uma senha é uma data
+	 */
+	private boolean checkPasswordIsDate(String password) 
+	{
+		int len = password.length();
+		
+		if (StringUtils.isNumeric(password) && len >= 6) 
+		{ 
+			int year = 0;
+			
+			if (len == 8 || len == 6) 
+				year = Integer.parseInt(password.substring(0, len - 4));
+			
+			int size = StringUtils.sizeOfInt(year);
+			int month = Integer.parseInt(password.substring(size, size + 2));
+			int day = Integer.parseInt(password.substring(size + 2, len));
+			
+			if (year >= 1950 && year < 2050 && month >= 1 && month <= 12 && day >= 1 && day <= 31) 
+				return true;
+		}
+
+		return false;
 	}
 
 	/**
