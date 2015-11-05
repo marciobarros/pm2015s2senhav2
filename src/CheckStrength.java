@@ -82,13 +82,23 @@ public class CheckStrength
 		if (StringUtils.equalsNull(password)) 
 			throw new IllegalArgumentException("password is empty");
 
-		// Conta o número de cada componente da senha
+		// Calcula o tamanho da senha
 		int len = password.length();
+		
+		// Condições limite - senhas muito ruins
+		if (len <= 3) 
+			return 0;
+
+		if (StringUtils.isCharEqual(password))
+			return 0;
+
+		// Conta o número de cada componente da senha
 		int countNumeric = countNumeric(password);
 		int countSmall = countSmallLetter(password); 
 		int countCapital = countCapitalLetter(password); 
 		int countSpecial = len - countNumeric - countSmall - countCapital;
 
+		// Inicializa o nível da senha
 		int level = 0;
 
 		// adiciona pontos
@@ -202,23 +212,11 @@ public class CheckStrength
 			if (len <= 4) 
 			{
 				level--;
-			
-				if (len <= 3) 
-				{
-					level = 0;
-				}
 			}
 		}
 
-		if (StringUtils.isCharEqual(password)) 
-		{
-			level = 0;
-		}
-
 		if (level < 0) 
-		{
 			level = 0;
-		}
 
 		return level;
 	}
