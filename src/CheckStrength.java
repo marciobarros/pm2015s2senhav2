@@ -192,17 +192,8 @@ public class CheckStrength
 			level--;
 
 		// dicionario
-		if (null != DICTIONARY && DICTIONARY.length > 0) 
-		{
-			for (int i = 0; i < DICTIONARY.length; i++) 
-			{
-				if (password.equals(DICTIONARY[i]) || DICTIONARY[i].indexOf(password) >= 0) 
-				{
-					level--;
-					break;
-				}
-			}
-		}
+		if (checkPasswordInDictionary(password))
+			level--;
 
 		if (len <= 6) 
 		{
@@ -294,7 +285,7 @@ public class CheckStrength
 	}
 
 	/**
-	 * Verifica se uma senha é uma data
+	 * Verifica se a senha é uma data
 	 */
 	private boolean checkPasswordIsDate(String password) 
 	{
@@ -314,6 +305,21 @@ public class CheckStrength
 			if (year >= 1950 && year < 2050 && month >= 1 && month <= 12 && day >= 1 && day <= 31) 
 				return true;
 		}
+
+		return false;
+	}
+
+	/**
+	 * Verifica se a senha está no dicionário
+	 */
+	private boolean checkPasswordInDictionary(String password) 
+	{
+		if (DICTIONARY == null)
+			return false;
+		
+		for (int i = 0; i < DICTIONARY.length; i++) 
+			if (password.equals(DICTIONARY[i]) || DICTIONARY[i].indexOf(password) >= 0)
+				return true;
 
 		return false;
 	}
